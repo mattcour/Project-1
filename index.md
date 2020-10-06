@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 <head>
     <title>1854, London: Cholera Outbreak Visualization Draft</title>
@@ -324,14 +324,16 @@
             .attr('x', 440)
             .attr('y', 720)
 			.attr('text-anchor', 'middle')
-			.style('font-weight', 'bold')
+            .style('font-weight', 'bold')
+            .style("font-size", "16px")
 			.html('Date');
 
     svg.append('text')    
             .attr('x', -320)
             .attr('y', -30)
             .attr("transform", "rotate(-90)" )
-      		.attr('text-anchor', 'middle')
+            .attr('text-anchor', 'middle')
+            .style("font-size", "16px")
             .style('font-weight', 'bold')
             .html('Number of Deaths'); 
 
