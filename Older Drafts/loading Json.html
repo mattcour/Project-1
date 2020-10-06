@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Project 1 - sample code 2</title>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<style>
+    	text { 
+			font-family: Arial; 
+			font-size: 15px;
+		}
+		.axis path, .axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+		.tick text {
+			fill: black;
+			font-size: 11px;
+		}
+
+		rect {
+			stroke: white;
+		}
+	</style>
+</head>
+<body>
+
+	<svg id="main" width="600" height="600">
+		<text id='label' x='20' y='20'>Cholera Deaths in London Neighborhood</text>
+		<g transform="translate(30,40)"></g>
+	</svg>
+
+	
+	<script>
+
+		var CHART_WIDTH = 400;
+		var CHART_HEIGHT = 130;
+
+		var MAX_BAR_HEIGHT = 100;
+
+        var streets = []
+       
+       
+
+            /// okay, we got lines for what looks like every connection! now let's make them visible and move those rascals around to make streets
+
+            //create SVG element --from book pp220-222
+           //var svg = d3.select("body")
+           //     .append('svg')
+            //    .attr("width", w)
+             //   .attr("height", h)
+
+            // create line
+            //svg.append("path")
+              //  .datum(dataset)
+              //  .attr("class", "line")
+              //  .attr("d", line);
+
+
+
+		d3.json('streets.json', function(json) {
+            /// checking to see it loaded
+            console.log(json);
+            /// success! now let's make some lines
+            
+        
+    // Define the line
+    var	lineFunction = d3.svg.line()
+	        .x(function(d) { return d.x * 25; })
+            .y(function(d) { return d.y * 25; });
+
+            d3.select("g"). selectAll("path")
+                .data(json)
+                .enter()
+                .append("path")
+                .attr("d", function(block){
+                     return lineFunction(block)
+                    
+                 })
+                .attr('fill', 'none')
+                .attr("stroke", 'black')
+
+
+            
+
+           
+        } );
+
+        
+		
+		
+	</script>
+</body>
+
+
+</html>

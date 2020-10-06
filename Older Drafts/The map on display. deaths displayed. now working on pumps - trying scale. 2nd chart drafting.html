@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1854, London: Cholera Outbreak Visualization Draft</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+	<style>
+    	text { 
+			font-family: Arial; 
+			font-size: 28px;
+		}
+		.axis path, .axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+		.tick text {
+			fill: black;
+			font-size: 11px;
+		}
+
+		rect {
+			stroke: white;
+		}
+	</style>
+</head>
+<body> 
+
+	<svg id="main" width="1000" height="800">
+        <text id='label' x='150' y='50'>Tracking the Cholera Outbreak in London, 1854</text>
+    	<g transform="translate(0,0)"></g>
+	</svg>
+	<script>
+    
+//perhaps set the scale here - p120
+// my visual is currently a mirror image on the y-axis
+//
+// these variables are not currently not tied to anything 
+// should help with scaling
+	var CHART_WIDTH = 800;
+    var CHART_HEIGHT = 800;
+    var CHART_SIZE = 800;
+    var MAX_BAR_HEIGHT = 100;
+    var maxValue = 100; 
+    var w="800"
+    var h="800"
+			///helps find maximum value in data set
+		//	maxValue = d3.max(json, function(d) {
+		//		return d.json;
+	//		});
+		// lets scale those rascals
+		var xScale = d3.scale.linear();
+		var yScale = d3.scale.linear();
+
+    //specifying domain and range for axes
+      //      xScale
+        //        .domain([0, 100])
+          //      .range([0, 800]);
+			
+         //   yScale
+         //       .domain( [maxValue, 0] )
+         //       .range( [CHART_HEIGHT, 0] );
+          
+	d3.json('streets.json', function(json) {
+        /// checking to see it loaded
+        console.log(json);
+        /// success! now let's make some lines      
+        // Define the lines for the map --- 
+        // just used *30 for now, plan to scale and define axes and all that
+        var	lineFunction = d3.svg.line()
+	        .x(function(d) { return d.x *30; })
+            .y(function(d) { return d.y *30; });
+            /// or, set scale here? this is my output range for the map 
+            //d3.min(json) and d3.max(json)? 
+
+            d3.select("g"). selectAll("path")
+                .data(json)
+                .enter()
+                .append("path")
+                /// arbitrarly named it block, thinking drawing city blocks
+                .attr("d", function(block){
+                     return lineFunction(block) })
+                .attr('fill', 'none')
+                .attr("stroke", 'black')
+         });
+
+
+    /// now that the map is in, let's add the DEATH AGE SEX data
+    d3.csv('deaths_age_sex.csv', function(deaths){
+        console.log(deaths); 
+        //and it is in! now time to map these coordinates. 
+        ///have x,y,for location and also age and sex to add later. 
+        var svg = d3.select("g")
+        // making circles for locations for now 
+        // idea is to have rectangles for pumps
+             svg.selectAll("circle")
+                .data(deaths) 
+                .enter()
+                .append("circle")
+                .attr("cx", function(d) {return d.x*30})
+                .attr("cy", function(d) {return d.y*30})
+                .attr("r", 2.5)
+                .attr('id', function(d) { return 'left_' + d.id; } );
+        //add code here to make different colors or shapes for sex/age
+
+        // playing around with interaction code from class resource
+        svg.selectAll('circle')
+			.on('mouseover', function(d) 
+			{
+				d3.select("#left_" + d.id)
+					.style('fill', 'red')
+					.attr('r', '8px')
+
+				// move brushed circle so that it's on top
+				this.parentNode.appendChild(this);
+
+			})
+
+			.on('mouseout', function(d) {
+				d3.select("#left_" + d.id)
+					.style('fill', null)
+					.attr('r', '6px');
+            })
+            
+
+    // adding pumps data     
+    d3.csv('pumps.csv', function(pumps){
+        console.log(pumps);     
+        //lets add those pumps!!
+        var pumpselection = d3.select("g")
+            pumpselection.selectAll("rect")
+               .data(pumps)
+               .enter()
+               .append("rect")
+               .attr("x", function(d) {return d.x*30})
+               .attr("y", function(d) {return d.y*30})
+               .attr("width", 5)
+               .attr("height", 5)
+               .attr("fill", 'red')
+
+               /// trying to add a second chart to the right
+		
+var gLeft = svg.append('g')
+			.attr('transform', 'translate(500,10)')
+		gLeft.selectAll('circle')
+			.data(pumps)
+			.enter().append('circle')
+			.attr('r', '5px')
+			.attr('cx', function(d) { return xScale(d.x*30)})
+			.attr('cy', function(d) { return yScale(d.y*30)})
+			.attr('id', function(d) { return 'left_' + d.id; } );
+         });
+       
+         //adding death days data
+         d3.csv('deathdays.csv', function(days){
+        console.log(days);     
+      
+
+
+		
+
+      ///the line is coming - path generator function to turn data into pixels :D
+    //  var pathGenerator = d3.svg.line()
+	//			.x(function(d) { return xScale(d.x*30); })
+	//			.y(function(d) { return yScale(d.y*30) });
+            
+                
+      //      var g = d3.select('svg').select('g');
+       //     .attr('transform', 'translate(400,0)')
+//
+//			var xAxis = d3.svg.axis()
+  //  			.scale(xScale)
+    //			.orient('bottom')
+    //			.tickFormat(function(d) { return "" + d; })
+//
+ //   		var yAxis = d3.svg.axis()
+   // 			.scale(yScale)
+    //			.orient('left');
+//
+
+  //  		g.append('g')
+    //			.attr('class', 'axis')
+    //			.attr('transform', 'translate(0,' + CHART_HEIGHT + ')')
+    //			.call(xAxis);
+
+    //		g.append('g')
+    //			.attr('class', 'axis')
+      //          .call(yAxis);
+                
+///giving it to a path generator function - maps it from data to pixels
+   // 		g.append('path')
+    //			.style('fill', 'none')
+    //			.style('stroke', 'steelblue')
+    //			.style('stroke-width', '3px')
+    //			.attr('d', pathGenerator(days));
+
+
+	///	}
+			
+
+		//d3.csv('_us.csv', function(data) 
+	//	{
+	//		var record = data[0];
+				
+			// loop through all years, from 1980 to 2012
+	//		for (var y=1980; y<=2012; y++) 
+	//		{
+	//			var value = record[y];
+	//			var object = {
+	//				year: y,
+	//				production: +value
+	//			};
+//
+//				energyProduction.push(object);
+//			}
+//			drawLineChart();
+
+
+
+
+
+          });
+
+         });
+
+
+
+
+/// from exercise in class - pets bar charts - use something like this for getting deaths -- with circles instead of rectangles
+///    <rect id="bar1" x="50" y="50" width="30" height="100" style="fill: steelblue"/> /// ........       
+/// var selection = d3.select('#svg1').selectAll('rect').data(pets)
+     ///  selection.attr('height', 
+   // 	function(d) 
+    //	{ 
+    //		return (d/102) * CHART_HEIGHT; 
+    //	}
+   // );
+
+   // selection.attr('y', function(d) { return (1-d/102) * CHART_HEIGHT; });
+
+        // OTHER CHART RIGHT HERE? 
+        // new SVG positioned either side by side on just below the first 'g'
+        //make sure the two charts interact with each other! but additional charts do not need to
+		
+		
+	</script>
+</body>
+
+
+</html>

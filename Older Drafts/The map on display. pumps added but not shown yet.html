@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1854, London: Cholera Outbreak Visualization Draft</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+	<style>
+    	text { 
+			font-family: Arial; 
+			font-size: 15px;
+		}
+		.axis path, .axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+		.tick text {
+			fill: black;
+			font-size: 11px;
+		}
+
+		rect {
+			stroke: white;
+		}
+	</style>
+</head>
+<body>
+
+	<svg id="main" width="700" height="700">
+		<text id='label' x='150' y='100'>Tracking the Cholera Outbreak in London, 1854</text>
+		<g transform="translate(30,40)"></g>
+	</svg>
+
+	
+	<script>
+//perhaps set the scale here - p120
+
+// these variables are not currently being used
+		var CHART_WIDTH = 800;
+		var CHART_HEIGHT = 500;
+        var MAX_BAR_HEIGHT = 100;
+        
+
+          
+		d3.json('streets.json', function(json) {
+            /// checking to see it loaded
+            console.log(json);
+            /// success! now let's make some lines
+            
+        // Define the lines for the map --- 
+        // just used *25 for now, plan to scale and define axes and all that
+        var	lineFunction = d3.svg.line()
+	        .x(function(d) { return d.x * 25; })
+            .y(function(d) { return d.y * 25; });
+            /// or, set scale here? this is my output range for the map 
+            //d3.min(json) and d3.max(json)? 
+
+            d3.select("g"). selectAll("path")
+                .data(json)
+                .enter()
+                .append("path")
+                /// arbitrarly named it block
+                .attr("d", function(block){
+                     return lineFunction(block)
+                    })
+                .attr('fill', 'none')
+                .attr("stroke", 'black')
+
+            } );
+             // adding pumps data while I am at it -in this run.
+             // might be easier to work right now    
+                
+         
+         	            
+         //based off book p176
+       // svg.append("g")
+       // .attr('id', 'circle')
+       // .selectAll("circle")
+       // .data(deaths)
+       // .enter()
+       // .append("circle")
+       // .attr("fill", "red")
+    
+
+        d3.csv('pumps.csv', function(pumps){
+        console.log(pumps); 
+        
+        // the data checks out. lets add those pumps!!
+
+         // online source from TA
+             // Adds the svg canvas
+            var svg = d3.select("g")
+        /// creating rectangles to bind to for pumps (tripped up my code :())
+        //<rect id="pump1" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump2" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump3" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump4" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump5" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump6" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump7" width="10" height="10" style="fill: steelblue"/> 
+        //<rect id="pump8" width="10" height="10" style="fill: steelblue"/>
+        //<rect id="pump9" width="10" height="10" style="fill: steelblue"/>
+        //<rect id="pump10" width="10" height="10" style="fill: steelblue"/>
+        //<rect id="pump11" width="10" height="10" style="fill: steelblue"/>
+        //<rect id="pump12" width="10" height="10" style="fill: steelblue"/>
+        //<rect id="pump13" width="10" height="10" style="fill: steelblue"/>    
+
+            svg.selectAll("circle")
+                .data(pumps) /// it was having trouble recognizing this, but resolved after reorganized brackets for each data set.
+                .enter()
+                .append("circle")
+                .attr("cx", function(d) {return d.x})
+                .attr("cy", function(d) {return d.y})
+            
+        
+       ///drafting from Murray online tutorial D3 exercises
+              //  .attr("cx", function(d, i) {
+                  //      return (i * 25); })
+              //  .attr("cy", d.y*25)
+                .attr("r", 3)
+              });
+        
+/// from exercise in class - pets bar charts - use something like this for getting deaths -- with circles instead of rectangles
+///    <rect id="bar1" x="50" y="50" width="30" height="100" style="fill: steelblue"/> /// ........       
+/// var selection = d3.select('#svg1').selectAll('rect').data(pets)
+     ///  selection.attr('height', 
+   // 	function(d) 
+    //	{ 
+    //		return (d/102) * CHART_HEIGHT; 
+    //	}
+   // );
+
+   // selection.attr('y', function(d) { return (1-d/102) * CHART_HEIGHT; });
+
+        
+		
+		
+	</script>
+</body>
+
+
+</html>

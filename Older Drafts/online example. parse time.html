@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Using D3 to change fill color on mouseover</title>
+		<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+		<style type="text/css">
+			/* No style rules here yet */		
+		</style>
+	</head>
+	<body>
+		
+
+    <script>
+    
+ //   d3.csv("deathdays.csv", function(dates){
+   //     console.log(dates)});
+
+        var dates = [
+  {"date": "Apr 1, 1970", "event": "A"},
+  {"date": "Jun 15, 1971", "event": "B"},
+  {"date": "Mar 30, 1972", "event": "C"},
+  {"date": "Jan 1, 1973", "event": "D"},
+  {"date": "Jun 15, 1973", "event": "E"}
+];
+    var parseTime = d3.timeParse("%m/%d/%y");
+
+    var dates = [];
+        for (let obj of dates) {
+         dates.push(parseTime(obj.date));}
+    
+    var domain = d3.extent(dates);
+
+    var xScale = d3.scaleTime()
+         .domain(domain)
+        .range([25, 555]);
+
+    var xAxis = d3.axisBottom(xScale);
+
+    var svg = d3.select("#dateDemo1");
+
+    svg.append("g")
+        .attr("transform", "translate(0,60)")
+        .call(xAxis);
+
+
+        /// adding data points
+        svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("r", 5)
+    .attr("fill", "black")
+    .attr("cx", (d) => xScale(parseTime(d.date)))
+    .attr("cy", 50);
+			
+            
+		</script>
+	</body>
+</html>

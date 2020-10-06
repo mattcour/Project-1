@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Using D3 to change fill color on mouseover</title>
+		<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+		<style type="text/css">
+			/* No style rules here yet */		
+		</style>
+	</head>
+	<body>
+		
+
+    <script>
+    
+    d3.csv("deathdays.csv", function(dates){
+        console.log(dates)});
+
+
+    var parseTime = d3.timeParse("%b %d, %Y");
+
+    var dates = [];
+        for (let obj of data) {
+         dates.push(parseTime(obj.date));}
+  
+
+
+			
+            
+		</script>
+	</body>
+</html>

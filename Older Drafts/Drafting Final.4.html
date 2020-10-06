@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1854, London: Cholera Outbreak Visualization Draft</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+	<style>
+    	text { 
+			font-family: Arial; 
+			font-size: 12px;
+		}
+		.axis path, .axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+
+        .axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+		.tick text {
+			fill: black;
+			font-size: 11px;
+		}
+
+		rect {
+			stroke: white;
+		}			
+
+	</style>
+</head>
+<body> 
+
+	<svg id="main" width="1500" height="2000">
+        <text id='label' x='260' y='30'>Tracking the Cholera Outbreak in London, 1854</text>
+        <text id='label2' x='800' y='30'>Cholera Deaths Per Day Over a Two Week Period</text>
+        <text id='label3' x='260' y='700'>Distribution of Cholera Deaths based on Age</text>
+        <text id='label4' x='800' y='700'>Distribution of Cholera Deaths based on Sex</text>
+        <text id='label5' x='260' y='1000'>Explanation and Discussion on Visuals</text>
+        <text id='label6' x='260' y='950'>Beethoven's 9th Symphony, Oslo Philharmonic: https://www.youtube.com/watch?v=QkQapdgAa7o (testing link space)</text>
+      <g transform="translate(0,0)" id="map" ></g>
+      <g transform="translate(740,45)" id="timechart" ></g>
+      <g transform="translate(100, 800)" id="agechart" ></g>
+      <g transform="translate(740, 800)" id="genderchart" ></g>
+  </svg>
+  
+	<script>    
+// define some variables upfront, i.e. globally
+ 
+    var padding = 30;
+    // this variable to be used in time chart, potentially
+    var margin = {top: 50, right: 20, bottom: 70, left: 40},
+        width = 500 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
+    
+// lets get some scales
+  // scales for map		
+    var xScale = d3.scale.linear();
+    var yScale = d3.scale.linear();
+//setting domain/range for map scales      
+      xScale.domain([0,20]).range([0,700]);
+      yScale.domain([20,0]).range([0,700]);
+
+// scales for time chart
+    var x = d3.scale.ordinal()
+            .rangeRoundBands([0, width]);
+    var y = d3.scale.linear()
+            .domain([0,155]).range([height, 0]);
+
+//scales for scatterplot of deaths and age
+    var xScale3 = d3.scale.linear()
+            .domain([0,5])
+            .range([0, width]);
+    var yScale3 = d3.scale.linear()
+            .domain([0,155])
+            .range([height,0]); 
+
+//scales for barchart of deaths and gender
+    var xScale4 = d3.scale.linear().domain([0,1]).range([0, width]);
+    var yScale4 = d3.scale.linear().domain([0,575]).range([height,0]); 
+
+//loading map data        
+	d3.json('streets.json', function(json) {
+        /// checking to see it loaded
+        console.log(json);
+        /// success! now let's make some lines      
+        var	lineFunction = d3.svg.line()
+	        .x(function(d) { return xScale(d.x); })
+            .y(function(d) { return yScale(d.y); });
+          
+            d3.select("#map"). selectAll("path")
+                .data(json)
+                .enter()
+                .append("path")
+                /// arbitrarly named it block, thinking city blocks
+                .attr("d", function(block){
+                     return lineFunction(block) })
+                .attr('fill', 'none')
+                .attr("stroke", 'black')
+         });
+
+/// now that the map is in, let's add the DEATH AGE SEX data
+    d3.csv('deaths_age_sex.csv', function(deaths){
+        console.log(deaths); 
+        //and it is in! now time to map these coordinates. 
+        var svg = d3.select("#map")
+        // making circles for death locations
+            svg.selectAll("circle")
+                .data(deaths) 
+                .enter()
+                .append("circle")
+                .attr("class", "victim")
+                .attr("cx", function(d) {return xScale(d.x)})
+                .attr("cy", function(d) {return yScale(d.y)})
+                .attr("r", 2.5)
+                .attr("fill", "darkgreen")
+                .attr('id', function(d, i) {return 'left_' + (i+1)}); //making IDs to link datasets/visuals
+
+//trying to add other labels
+            //oxford street
+            svg.append("text")
+                .attr("x", 328)
+                .attr("y", 191)
+                .attr("transform", "rotate(-12)")
+                .text("Oxford Street")
+                .attr("fill", "black")
+                //.attr("font-size", 14px);
+                // success!!!
+
+            //work house
+            svg.append("text")
+                .attr("x", 280)
+                .attr("y", 300)
+                .attr("transform", "rotate(-12)")
+                .text("Work House")
+                .attr("fill", "black")
+
+            // brewery
+            svg.append("text")
+                .attr("x", 446)
+                .attr("y",-316)
+                .attr("transform", "rotate(65)")  
+                .text("Brewery")
+                .attr("fill", "black")
+               
+            // regent street    
+            svg.append("text")
+                .attr("x", 395)
+                .attr("y", -100)
+                .attr("transform", "rotate(63)") 
+                .text("Regent Street")
+                .attr("fill", "black")
+
+            // song square   (two parts)
+            svg.append("text")
+                .attr("x", 617)
+                .attr("y", 140)
+                .text("Song")
+                .attr("fill", "black")
+            svg.append("text")
+                .attr("x", 615)
+                .attr("y", 152)
+                .text("Square")
+                .attr("fill", "black")
+
+            // dean  street 
+            svg.append("text")
+                .attr("x", 425)
+                .attr("y", -445)
+                .attr("transform", "rotate(63)") 
+                .text("Dean Street")
+                .attr("fill", "black")
+
+            // Legend
+            svg.append("text")
+                .attr("x", 130)
+                .attr("y", 600)
+                .text("Legend:")
+                .attr("fill", "black")
+            svg.append("text")
+                .attr("x", 140)
+                .attr("y", 612)
+                .text("Dots represent location of deaths from Cholera")
+                .attr("fill", "black")
+            svg.append("text")
+                .attr("x", 140)
+                .attr("y", 624)
+                .text("Red Rectangles represent water pump locations")
+                .attr("fill", "black")
+
+            // scroll over instructions
+            svg.append("text")
+                .attr("x", 710)
+                .attr("y", 600)
+                .text("Scrolling over the bar chart will highlight deaths, as they occurred up to that day, on the map to the left.")
+                .attr("fill", "black")      
+          
+// adding pumps data     
+     d3.csv('pumps.csv', function(pumps){
+        console.log(pumps);     
+        //lets add those pumps!!
+        var pumpselection = d3.select("#map")
+            pumpselection.selectAll("rect")
+               .data(pumps)
+               .enter()
+               .append("rect")
+               .attr("x", function(d) {return xScale(d.x)})
+               .attr("y", function(d) {return yScale(d.y)})
+               .attr("width", 6)
+               .attr("height", 8)
+               .attr("fill", 'red')
+    });
+
+//adding death days data
+    d3.csv('deathdays.csv', function(days){
+        console.log(days);   });
+        
+    });
+       
+
+// loading days data in a way to make the chart show up
+    d3.csv("deathdays.csv", function(error, data) {
+
+        data.forEach(function(d) {
+          d.date = d.date;
+          d.value = d.deaths;
+        });
+    
+// setting axes variables
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickFormat(d3.time.format("%Y-%m"))
+    /*.svg.append("g") */
+    /*    .call(d3.axisbottom(x))
+        .selectAll("text")
+            .attr("transform", "translate (-10,0) rotate(-45))")
+            .style("text-anchor", "end");
+
+       /* .attr("transform", "rotate(90)") */
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10);
+
+// further defining scales with deathdays data
+    x.domain(data.map(function(d) { return d.date; }));
+ //   y.domain([0, d3.max(data, function(d) { return d.value; })]); // taking away for now, was overriding earlier command
+       
+// prep SVG space
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// adding the bars for the chart
+    var svg = d3.select("#timechart")
+
+        svg.selectAll("bar")
+        .data(data)
+        .enter().append("rect")
+        .style("fill", "slateblue")
+        .attr("x", function(d) { return x(d.date); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .attr('id2', function(d, i) {return 'left_' + (i+1)})
+
+// creating the interactivity between visualizations
+        .on("mouseover", function(d, i) {
+             console.log(d.accumulative)
+             
+             d3.selectAll("circle.victim") //only selecting circles labelled as victims above
+                .filter(function(d2, i2) {
+                     i2 <= (d.accumulative)
+                     return i2 <= (d.accumulative)
+                })
+                .attr("fill", "gold")
+
+        })
+
+        .on("mouseout", function(d, i) {
+              d3.selectAll("rect.pt" + i)
+                  .attr("fill", "slateblue") 
+
+              d3.selectAll("circle.victim") //only selecting circles labelled as victims above
+                .filter(function(d2, i2) {
+                     i2 <= (d.accumulative)
+                     return i2 <= (d.accumulative)
+                })
+                .attr("fill", "black") // makes it black when mouse scrolls out
+        });         
+ 
+// orienting x-axis 
+    svg.append("g") // changed '#timechart' to 'g' because of unregonizable code
+            .attr('class', 'axis')
+            .attr('transform', 'translate(0, '+ height+')')
+			.call(d3.svg.axis().scale(x).orient('bottom'))
+// orienting y-axis
+	svg.append('g')
+			.attr('class', 'axis')
+			.call(d3.svg.axis().scale(y).orient('left'))
+
+// create the labels for axes
+	svg.append('text')
+            .attr('x', 220)
+            .attr('y', 520)
+			.attr('text-anchor', 'middle')
+			.style('font-weight', 'bold')
+			.html('Date');
+
+    svg.append('text')    
+            .attr('x', -225)
+            .attr('y', -30)
+            .attr("transform", "rotate(-90)" )
+      		.attr('text-anchor', 'middle')
+            .style('font-weight', 'bold')
+            .html('Number of Deaths'); 
+
+//Create X axis
+    svg.append("g")
+			.attr("class", "axis")
+			.attr("transform", "translate(0, height)")
+            .call(xAxis);
+                
+//Create Y axis
+	svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + padding + ",0)")
+        .call(yAxis);
+       
+});   
+
+ var svg = d3.select("#genderchart")
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 0)
+                .text("Testing this out. I made four 'g's, one for each visual.")
+                .attr("fill", "black")
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 12)
+                .text("For now I am placing this text in the space I intend the chart displaying distribution of deaths based on gender.")
+                .attr("fill", "black")
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 24)
+                .text("It will probably be a fairly boring bar chart but it will show the tallies of each right there, preferably with the numbers labeled in the bars.")
+                .attr("fill", "black");
+
+var svg = d3.select("#agechart")
+// loading days data in a way to make the chart show up
+    d3.csv("deathdays.csv", function(error, agedata) {
+
+        agedata.forEach(function(d) {
+          d.date = d.age;
+          d.value = d.deaths;
+        });
+    
+// setting axes variables
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickFormat(d3.time.format());
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10);
+
+// further defining scales with deathdays data
+    x.domain(agedata.map(function(d)
+         { return d.date; 
+        }));
+ //   y.domain([0, d3.max(data, function(d) { return d.value; })]); // taking away for now, was overriding earlier command
+       
+// prep SVG space
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// adding the bars for the chart
+    var svg = d3.select("#agechart")
+
+        svg.selectAll("bar")
+        .data(agedata)
+        .enter().append("rect")
+        .style("fill", "slateblue")
+        .attr("x", function(d) { return x(d.date); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .attr('id2', function(d, i) {return 'left_' + (i+1)})    
+ 
+// orienting x-axis 
+    svg.append("g") // changed '#timechart' to 'g' because of unregonizable code
+            .attr('class', 'axis')
+            .attr('transform', 'translate(0, '+ height+')')
+			.call(d3.svg.axis().scale(x).orient('bottom'))
+// orienting y-axis
+	svg.append('g')
+			.attr('class', 'axis')
+			.call(d3.svg.axis().scale(y).orient('left'))
+
+// create the labels for axes
+	svg.append('text')
+			.attr('transform', 'translate(' + (height/2) + ',' + (height+30) + ')')
+			.attr('text-anchor', 'middle')
+			.style('font-weight', 'bold')
+			.html('Date');
+
+    
+    svg.append('text')    
+            .attr('x', -225)
+            .attr('y', -30)
+            .attr("transform", "rotate(-90)" )
+      		.attr('text-anchor', 'middle')
+            .style('font-weight', 'bold')
+            .html('Number of Deaths'); 
+
+//Create X axis
+    svg.append("g")
+			.attr("class", "axis")
+			.attr("transform", "translate(0, height)")
+            .call(xAxis);
+                
+//Create Y axis
+	svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + padding + ",0)")
+        .call(yAxis);
+       
+});   
+
+
+   
+
+
+	</script>
+</body>
+
+
+</html>

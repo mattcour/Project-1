@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Using D3 to change fill color on mouseover</title>
+		<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+		<style type="text/css">
+			/* No style rules here yet */		
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+
+<script>
+    
+    var BAR_WIDTH = 10;
+        var MAX_BAR_HEIGHT = 100;
+
+        var days = [ ];
+
+       
+        function drawBarChart() {
+    
+        var maxValue = d3.max(days);
+
+        var selection = d3.select('svg').select('g').selectAll('rect').data(days);
+
+        var rectangles = selection.enter().append('rect');
+    
+            rectangles.attr('width', BAR_WIDTH)
+    
+            rectangles.attr('x', function(d, i) {
+            return i * BAR_WIDTH;})
+    
+            rectangles.attr('height', function(d) {
+             var n = d / maxValue;
+             return n * MAX_BAR_HEIGHT; });
+
+    rectangles.attr('y', function(d) {
+        var n = 1 - (d / maxValue);
+        return n * MAX_BAR_HEIGHT; });
+
+    
+/// load that data
+    d3.csv('deathdays.csv', function(days)
+    var record = days [0];
+
+    // loop through all years, from 1980 to 2012
+    for (var day=8/19/2020; day<=09/29/2020; day++) 
+    {
+        var value = record[day];	
+        days.push(+value);}
+
+    drawBarChart();
+
+
+			
+            });
+		</script>
+	</body>
+</html>
