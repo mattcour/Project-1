@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>1854, London: Cholera Outbreak Visualization Draft</title>
@@ -31,7 +31,7 @@
 </head>
 <body> 
 
-	<svg id="main" width="2400" height="2000">
+	<svg id="main" width="2400" height="2700">
     
       <g transform="translate(0,0)" id="map" ></g>
       <g transform="translate(790,45)" id="timechart" ></g>
@@ -127,8 +127,8 @@
                 .attr("transform", "rotate(-12)")
                 .text("Oxford Street")
                 .attr("fill", "black")
-                //.attr("font-size", 14px);
-                // success!!!
+                .style("font-size", "11px")
+               // success!!!
 
             //work house
             svg.append("text")
@@ -259,7 +259,8 @@
         .ticks(9);
 
 // further defining scales with deathdays data
-    x.domain(data.map(function(d) { return d.date; }));
+    x.domain(data.map(function(d) { return d.date; }))
+    /*x.range("0,5"); */
  //   y.domain([0, d3.max(data, function(d) { return d.value; })]); // taking away for now, was overriding earlier command
        
 // prep SVG space
@@ -505,7 +506,7 @@
                
     svg.append("text")
                 .attr("x", 0)
-                .attr("y", 480)
+                .attr("y", 472)
                 .text("Rationale of Design")
                 .attr("fill", "black")
                 .style("font-size", "16px")
@@ -658,17 +659,235 @@
     svg.append("text")
                 .attr("x", 0)
                 .attr("y", 950)
-                .text("")
+                .text("What I discovered:")
+                .attr("fill", "black")
+                .style("font-size", "16px")
+                .style("font-weight", "bold")
+                
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 980)
+                .text("When I set out on this journey, I was curious to see how the death locations came together day to day. ")
                 .attr("fill", "black")
                 .style("font-size", "14px")
 
     svg.append("text")
                 .attr("x", 0)
-                .attr("y", 950)
-                .text("How Have I Utilized These Visuals?")
+                .attr("y", 1000)
+                .text("With the way these visualizations are linked, I was able to see how that transpired. ")
                 .attr("fill", "black")
-                .style("font-size", "16px")
-                .style("font-weight", "bold")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1020)
+                .text("My hypothesis was that we would see more deaths around the water pump that was the cause of the contamination. ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1040)
+                .text("And each day, we would see the deaths piling up around that pump, so to speak.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1060)
+                .text("What I saw, instead, was a spread of deaths all over the map that over time showed a clear clustering around that pump.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1080)
+                .text("As I develop this further, with more variables, there will be much richer information to conceptualize and investigate with.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1110)
+                .text("Sources that helped me along the way on this journey in D3:")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1130)
+                .text("Dr. Khari Reda and Ratanond – THANK YOU!!!")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+              
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1150)
+                .text("Websites:")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1170)
+                .text("https://www.nationalgeographic.org/activity/mapping-london-epidemic/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1190)
+                .text("https://alignedleft.com/tutorials/d3/drawing-svgs ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1210)
+                .text("https://www.tutorialsteacher.com/d3js/data-binding-in-d3js ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1230)
+                .text("https://jsfiddle.net/matehu/w7h81xz2/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1250)
+                .text("http://embed.plnkr.co/wJDcZmkEzXaLVhuLZmcQ/")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1270)
+                .text("https://bl.ocks.org/d3noob/8952219 ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1290)
+                .text("https://blog.bitsrc.io/how-to-create-charts-from-external-data-sources-with-d3-js-4abbcb574706 ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1310)
+                .text("https://blog.risingstack.com/d3-js-tutorial-bar-charts-with-javascript/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1330)
+                .text("https://www.dashingd3js.com/svg-text-element ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1350)
+                .text("https://stackoverflow.com/questions/20021833/using-svg-attributes-in-variables-in-d3")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1370)
+                .text("https://www.tutorialsteacher.com/d3js/data-binding-in-d3js ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1390)
+                .text("https://www.tutorialsteacher.com/codeeditor?cid=d3-22 ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1410)
+                .text("https://www.d3indepth.com/introduction/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1430)
+                .text("https://www.d3indepth.com/shapes/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1450)
+                .text("https://www.d3indepth.com/scales/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1470)
+                .text("https://www.d3indepth.com/selections/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1490)
+                .text("https://resources.oreilly.com/examples/0636920026938/blob/master/chapter_09/27_data_join_with_key.html ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1510)
+                .text("https://alignedleft.com/tutorials/d3/binding-data ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+                svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1530)
+                .text("https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+                svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1550)
+                .text("http://using-d3js.com/04_04_working_with_dates.html ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+                svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1570)
+                .text("http://embed.plnkr.co/wJDcZmkEzXaLVhuLZmcQ/ ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+                svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1590)
+                .text("https://www.dashingd3js.com/lessons/d3-zoom-for-svg-lines-and-svg-paths-part-two")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+                svg.append("text")
+                .attr("x", 0)
+                .attr("y", 1610)
+                .text("https://www.youtube.com/watch?v=wsCOif7RMBo&t=315s&ab_channel=AccioCode ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
 
 
 // YOUTUBE VIDEO LINK
@@ -685,7 +904,7 @@
         svg.append("text")
                 .attr("x", 0)
                 .attr("y", -85)
-                .text("https://www.youtube.com/watch?v=KSbvF2ZIcYw ")
+                .text("https://www.youtube.com/watch?v=c1LbA3HCAsM&feature=youtu.be")
                 .attr("fill", "darkgreen")
                 .style("font-size", "16px")
                 
@@ -696,18 +915,11 @@
                 .text("(in-screen video located below project description)")
                 .attr("fill", "black")
                 .style("font-size", "18px")
-                .style("font-weight", 'italics')
+                .style("font-weight", 'italics');
                
-         
-
-  
-
-
-   
-
-
+        
 	</script>
 </body>
-<iframe x="530" y= "1000" width="560" height="315" src="https://www.youtube.com/embed/KSbvF2ZIcYw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c1LbA3HCAsM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </html>
