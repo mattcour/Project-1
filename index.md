@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>1854, London: Cholera Outbreak Visualization Draft</title>
@@ -719,7 +719,7 @@
     svg.append("text")
                 .attr("x", 0)
                 .attr("y", 1130)
-                .text("Dr. Khari Reda and Ratanond – THANK YOU!!!")
+                .text("Dr. Khari Reda and Ratanond Koonchanok – THANK YOU!!!")
                 .attr("fill", "black")
                 .style("font-size", "14px")
               
@@ -856,35 +856,35 @@
                 .attr("fill", "black")
                 .style("font-size", "14px")
 
-                svg.append("text")
+    svg.append("text")
                 .attr("x", 0)
                 .attr("y", 1530)
                 .text("https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths ")
                 .attr("fill", "black")
                 .style("font-size", "14px")
 
-                svg.append("text")
+    svg.append("text")
                 .attr("x", 0)
                 .attr("y", 1550)
                 .text("http://using-d3js.com/04_04_working_with_dates.html ")
                 .attr("fill", "black")
                 .style("font-size", "14px")
 
-                svg.append("text")
+    svg.append("text")
                 .attr("x", 0)
                 .attr("y", 1570)
                 .text("http://embed.plnkr.co/wJDcZmkEzXaLVhuLZmcQ/ ")
                 .attr("fill", "black")
                 .style("font-size", "14px")
 
-                svg.append("text")
+    svg.append("text")
                 .attr("x", 0)
                 .attr("y", 1590)
                 .text("https://www.dashingd3js.com/lessons/d3-zoom-for-svg-lines-and-svg-paths-part-two")
                 .attr("fill", "black")
                 .style("font-size", "14px")
 
-                svg.append("text")
+    svg.append("text")
                 .attr("x", 0)
                 .attr("y", 1610)
                 .text("https://www.youtube.com/watch?v=wsCOif7RMBo&t=315s&ab_channel=AccioCode ")
