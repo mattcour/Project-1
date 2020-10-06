@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 <head>
     <title>1854, London: Cholera Outbreak Visualization Draft</title>
