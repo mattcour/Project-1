@@ -31,8 +31,8 @@
 </head>
 <body> 
 
-	<svg id="main" width="2400" height="1700">
-                   
+	<svg id="main" width="2400" height="2000">
+    
       <g transform="translate(0,0)" id="map" ></g>
       <g transform="translate(790,45)" id="timechart" ></g>
       <g transform="translate(100, 850)" id="explanation" ></g>
@@ -145,6 +145,7 @@
                 .attr("transform", "rotate(65)")  
                 .text("Brewery")
                 .attr("fill", "black")
+                .style("font-size", "9px")
                
             // regent street    
             svg.append("text")
@@ -579,32 +580,124 @@
 
     svg.append("text")
                 .attr("x", 0)
-                .attr("y", 700)
+                .attr("y", 690)
+                .text("I also utilized some basic shapes to help distinguish the water pumps from the death locations.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 710)
+                .text("I figured this were optimal for differentiating between these categories of variables.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 730)
+                .text("I went ahead and manually made them rectangles with height being bigger than width. ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 750)
+                .text("I made this choice because it seemed to help these rectangles minimally overlap with existing data points, particularly in the center water pump near the brewery.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 780)
+                .text("I added labels to the map for key locations like the brewery and workhouse.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 800)
+                .text("I added a few major streets, but refrained from labelling many streets in an effort to keep this simple and legible.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+               
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 820)
+                .text(" This added tremendous value to the accuracy of the locations of the data points utilized. ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 850)
+                .text("I would have also liked to add the variables of age and sex to these visuals.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 870)
+                .text("Unfortunately, I was hitting roadblocks but had I been able to do what I had in mind, it would have been adding different hues for the sex and utilizing luminance to distinguish the age groups. ")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 890)
+                .text("There were six age groups altogether, so using luminance seems to be an optimal way to visualize this data and it also should be colorblind-friendly if used properly.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 910)
+                .text("I would have other graphs showing the distributions of deaths in these groups (one for sex and one for age groups) and these would have interactive effects with the map similarly to how the deaths over time chart functions.")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 950)
+                .text("")
+                .attr("fill", "black")
+                .style("font-size", "14px")
+
+    svg.append("text")
+                .attr("x", 0)
+                .attr("y", 950)
                 .text("How Have I Utilized These Visuals?")
                 .attr("fill", "black")
                 .style("font-size", "16px")
                 .style("font-weight", "bold")
+
 
 // YOUTUBE VIDEO LINK
          /*       <iframe width="560" height="315" src="https://www.youtube.com/embed/KSbvF2ZIcYw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */
                
          svg.append("text")
                 .attr("x", 0)
-                .attr("y", -75)
+                .attr("y", -105)
                 .text("Watch my walkthrough video here:")
                 .attr("fill", "black")
                 .style("font-size", "18px")
                 .style("font-weight", "bold")
 
-                svg.append("text")
+        svg.append("text")
                 .attr("x", 0)
-                .attr("y", -55)
+                .attr("y", -85)
                 .text("https://www.youtube.com/watch?v=KSbvF2ZIcYw ")
                 .attr("fill", "darkgreen")
+                .style("font-size", "16px")
+                
+                
+        svg.append("text")
+                .attr("x", 0)
+                .attr("y", -65)
+                .text("(in-screen video located below project description)")
+                .attr("fill", "black")
                 .style("font-size", "18px")
                 .style("font-weight", 'italics')
-                
-        
+               
          
 
   
@@ -615,6 +708,6 @@
 
 	</script>
 </body>
-
+<iframe x="530" y= "1000" width="560" height="315" src="https://www.youtube.com/embed/KSbvF2ZIcYw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </html>
